@@ -1,17 +1,25 @@
 import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { getCarsAction } from './actions';
+import { separateThousands } from './helpers';
 import '../style/main.less';
 
 const App = () => {
     const dispatch = useDispatch();
+    const selectedCar = useSelector(({ cars, selectedCar }) => (selectedCar && cars.find(car => car.id === selectedCar)));
+    console.log(selectedCar);
 
     useEffect(() => {
         dispatch(getCarsAction());
     }, []);
 
     return (
-        <div className='content'>test</div>);
+        <div className='content'>
+            { /* TODO: in the future probably here should be the cars selection block */ }
+            { selectedCar && <div className='content'>
+                { selectedCar.manufacturer }&nbsp;{ selectedCar.model }&nbsp;({ selectedCar.engine },&nbsp;{ selectedCar.year })&nbsp;-&nbsp;<em>{ separateThousands(selectedCar.mileage) }&nbsp;km</em>
+            </div> }
+        </div>);
 };
 
 export default App;
