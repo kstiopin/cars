@@ -6,8 +6,16 @@ import '../style/main.less';
 
 const App = () => {
     const dispatch = useDispatch();
-    const selectedCar = useSelector(({ cars, selectedCar }) => (selectedCar && cars.find(car => car.id === selectedCar)));
-    console.log(selectedCar);
+    const selectedCar = useSelector(({ cars, selectedCar }) => {
+        if (selectedCar) {
+            const carInfo = cars.find(car => car.id === selectedCar.id);
+            if (carInfo) {
+                return { ...selectedCar, ...carInfo };
+            }
+        }
+
+        return null;
+    });
 
     useEffect(() => {
         dispatch(getCarsAction());
@@ -15,7 +23,7 @@ const App = () => {
 
     return (
         <div className='content'>
-            { /* TODO: in the future probably here should be the cars selection block */ }
+            { /* TODO: in the future probably here should be the cars selection block that would call selectCarAction */ }
             { selectedCar && <div className='content'>
                 { selectedCar.manufacturer }&nbsp;{ selectedCar.model }&nbsp;({ selectedCar.engine },&nbsp;{ selectedCar.year })&nbsp;-&nbsp;<em>{ separateThousands(selectedCar.mileage) }&nbsp;km</em>
             </div> }
