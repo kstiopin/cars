@@ -26,6 +26,11 @@ const App = () => {
             { /* TODO: in the future probably here should be the cars selection block that would call selectCarAction */ }
             { selectedCar && <div className='content'>
                 { selectedCar.manufacturer }&nbsp;{ selectedCar.model }&nbsp;({ selectedCar.engine },&nbsp;{ selectedCar.year })&nbsp;-&nbsp;<em>{ separateThousands(selectedCar.mileage) }&nbsp;km</em>
+                { (selectedCar.links.length > 0) && <div>
+                    { selectedCar.links.map((link, index) => <div key={ `link${index}` }>
+                        <a href={ link }>{ link }</a>
+                    </div>)}
+                </div> }
             </div> }
         </div>);
 };

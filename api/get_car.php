@@ -13,5 +13,9 @@ $r = $mysqli->query("SELECT `spare_id`, `date`, `mileage`, `details` FROM `repai
 while ($f = $r->fetch_assoc()) {
     $car['repairs'][] = $f;
 }
+$r = $mysqli->query("SELECT `link` FROM `links` WHERE `car_id` = ".$_GET['carId']);
+while ($f = $r->fetch_assoc()) {
+    $car['links'][] = $f['link'];
+}
 
 die(json_encode($car));
